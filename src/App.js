@@ -20,19 +20,17 @@ export default function App() {
   useEffect(()=>{
     api.get('repositories').then((response)=>{
       setRepositories(response.data);
-      console.log(response.data);
     })
 
   },[])
 
 
   async function handleLikeRepository(id) {
-    const response = await api.patch(`repositories/${id}/like`);
-    const copyRepositories = [...repositories]
-    const index = copyRepositories.findIndex(repository=> repository.id === id);
-    copyRepositories[index].likes = response.data.likes;
+    const response = await api.post(`repositories/${id}/like`);
+    const index = repositories.findIndex(repository=> repository.id === id);
+    repositories[index].likes = response.data.likes;
     console.log(repositories);
-    setRepositories(copyRepositories);
+    setRepositories([...repositories]);
   }
 
   return (
