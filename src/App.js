@@ -28,10 +28,11 @@ export default function App() {
 
   async function handleLikeRepository(id) {
     const response = await api.patch(`repositories/${id}/like`);
-    const index = repositories.findIndex(repository=> repository.id === id);
-    repositories[index].likes = response.data.likes;
+    const copyRepositories = [...repositories]
+    const index = copyRepositories.findIndex(repository=> repository.id === id);
+    copyRepositories[index].likes = response.data.likes;
     console.log(repositories);
-    setRepositories([...repositories]);
+    setRepositories(copyRepositories);
   }
 
   return (
